@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'; // Import PropTypes for validation
+import Laboratory from '../pages/Laboratory';
 
 export default function MainContent({ isSidebarOpen }) {
   return (
@@ -9,10 +10,7 @@ export default function MainContent({ isSidebarOpen }) {
     >
       <div className="text-center">
         <h1 className="text-red-300 font-bold underline">Main Content</h1>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed suscipit ante ut est
-          convallis, in posuere purus viverra. Curabitur nec libero at ante tincidunt suscipit.
-        </p>
+        <Laboratory />
       </div>
     </div>
   );
