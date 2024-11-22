@@ -99,6 +99,16 @@ export default function Billing() {
     });
   };
 
+  const printInvoice = () => {
+    const printContent = document.getElementById("invoice");
+    const printWindow = window.open("", "_blank", "width=800,height=600");
+    printWindow.document.write("<html><head><title>Invoice</title></head><body>");
+    printWindow.document.write(printContent.innerHTML);
+    printWindow.document.write("</body></html>");
+    printWindow.document.close();
+    printWindow.print();
+  };
+
   return (
     <div className="p-8 space-y-6">
       <h1 className="text-2xl font-bold mb-4">Patient Billing</h1>
@@ -203,7 +213,10 @@ export default function Billing() {
 
       {/* Invoice Display */}
       {formData.totalAmount > 0 && (
-        <div className="mt-6 p-4 border border-gray-300 rounded bg-gray-50">
+        <div
+          id="invoice"
+          className="mt-6 p-4 border border-gray-300 rounded bg-gray-50"
+        >
           <h3 className="text-lg font-bold mb-2">Invoice</h3>
           <p><strong>Patient Name:</strong> {formData.patientName}</p>
           <p><strong>Total Amount:</strong> Rs. {formData.totalAmount}</p>
@@ -212,7 +225,7 @@ export default function Billing() {
           <p><strong>Payment Method:</strong> {formData.paymentMethod}</p>
           <button
             className="mt-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-            onClick={() => window.print()}
+            onClick={printInvoice}
           >
             Print Invoice
           </button>
