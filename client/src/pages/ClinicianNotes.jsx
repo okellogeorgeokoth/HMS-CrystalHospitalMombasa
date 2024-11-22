@@ -1,14 +1,32 @@
-import { useState } from 'react';
+import { useState } from "react";
+import { Calendar, dateFnsLocalizer } from "react-big-calendar";
+import "react-big-calendar/lib/css/react-big-calendar.css";
+import { format, parse, startOfWeek, getDay } from "date-fns";
+import enUS from "date-fns/locale/en-US";
+
+const locales = { "en-US": enUS };
+const localizer = dateFnsLocalizer({
+  format,
+  parse,
+  startOfWeek,
+  getDay,
+  locales,
+});
 
 export default function ClinicianNotes() {
   const [formData, setFormData] = useState({
-    clinicalNotes: '',
-    diagnosis: '',
-    treatmentPlan: '',
-    medications: [{ name: '', dosage: '', frequency: '', duration: '' }],
-    followUpInstructions: '',
-    additionalComments: '',
+    clinicalNotes: "",
+    diagnosis: "",
+    treatmentPlan: "",
+    medications: [{ name: "", dosage: "", frequency: "", duration: "" }],
+    followUpInstructions: "",
+    additionalComments: "",
+    nextAppointment: null,
   });
+
+  const [clinicalData, setClinicalData] = useState([]);
+  const [appointments, setAppointments] = useState([]);
+  const [selectedEvent, setSelectedEvent] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,19 +42,50 @@ export default function ClinicianNotes() {
   const addMedication = () => {
     setFormData({
       ...formData,
-      medications: [...formData.medications, { name: '', dosage: '', frequency: '', duration: '' }],
+      medications: [...formData.medications, { name: "", dosage: "", frequency: "", duration: "" }],
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Form Data Submitted:', formData);
-    // Here, you can send the data to your backend or perform additional processing.
+
+    // Add clinical notes data to table
+    setClinicalData([...clinicalData, { ...formData, id: clinicalData.length + 1 }]);
+
+    // Schedule the next appointment if provided
+    if (formData.nextAppointment) {
+      setAppointments([
+        ...appointments,
+        { title: "Follow-Up Appointment", start: new Date(formData.nextAppointment), end: new Date(formData.nextAppointment) },
+      ]);
+    }
+
+    // Reset form
+    setFormData({
+      clinicalNotes: "",
+      diagnosis: "",
+      treatmentPlan: "",
+      medications: [{ name: "", dosage: "", frequency: "", duration: "" }],
+      followUpInstructions: "",
+      additionalComments: "",
+      nextAppointment: null,
+    });
+  };
+
+  const handleEdit = (id) => {
+    const record = clinicalData.find((data) => data.id === id);
+    setFormData(record);
+    setClinicalData(clinicalData.filter((data) => data.id !== id));
+  };
+
+  const handleDelete = (id) => {
+    setClinicalData(clinicalData.filter((data) => data.id !== id));
   };
 
   return (
     <div className="p-8 space-y-6">
-      <h1 className="text-2xl font-bold mb-4">Clinician Notes and Treatment</h1>
+      <h1 className="text-2xl font-bold">Clinician Notes and Treatment</h1>
+      {/* Form Section */}
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Clinical Notes */}
         <div>
@@ -82,94 +131,106 @@ export default function ClinicianNotes() {
           <label className="block text-sm font-semibold">Medications</label>
           {formData.medications.map((medication, index) => (
             <div key={index} className="space-y-2 mb-4 border p-4 rounded bg-gray-50">
-              <div>
-                <label className="block text-xs font-semibold">Medication Name</label>
-                <input
-                  type="text"
-                  name="name"
-                  value={medication.name}
-                  onChange={(e) => handleMedicationChange(index, e)}
-                  className="w-full p-2 border border-gray-300 rounded"
-                  placeholder="e.g., Paracetamol"
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-semibold">Dosage</label>
-                <input
-                  type="text"
-                  name="dosage"
-                  value={medication.dosage}
-                  onChange={(e) => handleMedicationChange(index, e)}
-                  className="w-full p-2 border border-gray-300 rounded"
-                  placeholder="e.g., 500mg"
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-semibold">Frequency</label>
-                <input
-                  type="text"
-                  name="frequency"
-                  value={medication.frequency}
-                  onChange={(e) => handleMedicationChange(index, e)}
-                  className="w-full p-2 border border-gray-300 rounded"
-                  placeholder="e.g., Twice daily"
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-semibold">Duration</label>
-                <input
-                  type="text"
-                  name="duration"
-                  value={medication.duration}
-                  onChange={(e) => handleMedicationChange(index, e)}
-                  className="w-full p-2 border border-gray-300 rounded"
-                  placeholder="e.g., 7 days"
-                />
-              </div>
+              <input
+                type="text"
+                name="name"
+                value={medication.name}
+                onChange={(e) => handleMedicationChange(index, e)}
+                className="w-full p-2 border border-gray-300 rounded"
+                placeholder="Medication Name"
+              />
+              <input
+                type="text"
+                name="dosage"
+                value={medication.dosage}
+                onChange={(e) => handleMedicationChange(index, e)}
+                className="w-full p-2 border border-gray-300 rounded"
+                placeholder="Dosage"
+              />
+              <input
+                type="text"
+                name="frequency"
+                value={medication.frequency}
+                onChange={(e) => handleMedicationChange(index, e)}
+                className="w-full p-2 border border-gray-300 rounded"
+                placeholder="Frequency"
+              />
+              <input
+                type="text"
+                name="duration"
+                value={medication.duration}
+                onChange={(e) => handleMedicationChange(index, e)}
+                className="w-full p-2 border border-gray-300 rounded"
+                placeholder="Duration"
+              />
             </div>
           ))}
-          <button
-            type="button"
-            onClick={addMedication}
-            className="text-blue-500 text-sm underline"
-          >
-            + Add Another Medication
+          <button type="button" onClick={addMedication} className="text-blue-500 text-sm underline">
+            + Add Medication
           </button>
         </div>
 
-        {/* Follow-Up Instructions */}
+        {/* Next Appointment */}
         <div>
-          <label className="block text-sm font-semibold">Follow-Up Instructions</label>
-          <textarea
-            name="followUpInstructions"
-            value={formData.followUpInstructions}
+          <label className="block text-sm font-semibold">Next Appointment</label>
+          <input
+            type="datetime-local"
+            name="nextAppointment"
+            value={formData.nextAppointment || ""}
             onChange={handleChange}
-            rows="3"
             className="w-full p-2 border border-gray-300 rounded"
-            placeholder="Provide follow-up care instructions."
           />
         </div>
 
-        {/* Additional Comments */}
-        <div>
-          <label className="block text-sm font-semibold">Additional Comments</label>
-          <textarea
-            name="additionalComments"
-            value={formData.additionalComments}
-            onChange={handleChange}
-            rows="3"
-            className="w-full p-2 border border-gray-300 rounded"
-            placeholder="Enter any additional information."
-          />
-        </div>
-
-        {/* Submit Button */}
-        <div className="text-center">
-          <button type="submit" className="bg-blue-500 text-white p-3 rounded">
-            Submit Notes
-          </button>
-        </div>
+        {/* Submit */}
+        <button type="submit" className="bg-blue-500 text-white p-3 rounded">
+          Submit Notes
+        </button>
       </form>
+
+      {/* Clinical Notes Table */}
+      <h2 className="text-xl font-bold">Clinical Notes History</h2>
+      <table className="w-full border-collapse border border-gray-300">
+        <thead className="bg-gray-100">
+          <tr>
+            <th className="p-2 border">ID</th>
+            <th className="p-2 border">Clinical Notes</th>
+            <th className="p-2 border">Diagnosis</th>
+            <th className="p-2 border">Treatment Plan</th>
+            <th className="p-2 border">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {clinicalData.map((data) => (
+            <tr key={data.id}>
+              <td className="p-2 border">{data.id}</td>
+              <td className="p-2 border">{data.clinicalNotes}</td>
+              <td className="p-2 border">{data.diagnosis}</td>
+              <td className="p-2 border">{data.treatmentPlan}</td>
+              <td className="p-2 border">
+                <button onClick={() => handleEdit(data.id)} className="text-blue-500 mr-2">
+                  Edit
+                </button>
+                <button onClick={() => handleDelete(data.id)} className="text-red-500">
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      {/* Calendar */}
+      <h2 className="text-xl font-bold mt-6">Appointments Calendar</h2>
+      <Calendar
+        localizer={localizer}
+        events={appointments}
+        startAccessor="start"
+        endAccessor="end"
+        style={{ height: 500 }}
+        selectable
+        onSelectEvent={(event) => alert(`Appointment: ${event.title}`)}
+      />
     </div>
   );
 }
