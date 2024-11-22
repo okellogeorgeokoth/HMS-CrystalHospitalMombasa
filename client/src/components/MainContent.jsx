@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'; // Import PropTypes for validation
 export default function MainContent({ isSidebarOpen }) {
   return (
     <div
-      className={`bg-white p-14 flex-1 transition-all duration-300 min-h-screen ${
+      className={`bg-white p-16 flex-1 transition-all duration-300 min-h-screen ${
         isSidebarOpen ? 'ml-[30%]' : 'ml-0'
       }`}
     >

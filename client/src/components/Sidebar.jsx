@@ -90,67 +90,67 @@ export default function Sidebar({ isOpen }) {
             <Link to="/patient-registration">
               <FaUser />
             </Link>
-            <span className="absolute left-0 top-0 hidden group-hover:inline-block text-xs text-black m-2 p-3 text-center">Patient Registration</span>
+            <span className="hidden group-hover:inline-block text-xs text-black">Patient Registration</span>
           </li>
           <li className="relative group">
             <Link to="/triage">
               <FaHeartbeat />
             </Link>
-            <span className="absolute left-0 top-0 hidden group-hover:inline-block text-xs text-black m-2 p-3 text-center">Triage</span>
+            <span className="hidden group-hover:inline-block text-xs text-black">Triage</span>
           </li>
           <li className="relative group">
             <Link to="/clinician-notes">
               <FaNotesMedical />
             </Link>
-            <span className="absolute left-0 top-0 hidden group-hover:inline-block text-xs text-black m-2 p-3 text-center">Clinician Notes</span>
+            <span className="hidden group-hover:inline-block text-xs text-black">Clinician Notes</span>
           </li>
           <li className="relative group">
             <Link to="/laboratory">
               <FaFlask />
             </Link>
-            <span className="absolute left-0 top-0 hidden group-hover:inline-block text-xs text-black m-2 p-3 text-center">Laboratory</span>
+            <span className="hidden group-hover:inline-block text-xs text-black">Laboratory</span>
           </li>
           <li className="relative group">
             <Link to="/pharmacy">
               <FaPills />
             </Link>
-            <span className="absolute left-0 top-0 hidden group-hover:inline-block text-xs text-black m-2 p-3 text-center">Pharmacy</span>
+            <span className="hidden group-hover:inline-block text-xs text-black">Pharmacy</span>
           </li>
           <li className="relative group">
             <Link to="/billing">
               <FaFileInvoice />
             </Link>
-            <span className="absolute left-0 top-0 hidden group-hover:inline-block text-xs text-black m-2 p-3 text-center">Billing</span>
+            <span className="hidden group-hover:inline-block text-xs text-black">Billing</span>
           </li>
           <li className="relative group">
             <Link to="/inventory">
               <FaBox />
             </Link>
-            <span className="absolute left-0 top-0 hidden group-hover:inline-block text-xs text-black m-2 p-3 text-center">Inventory</span>
+            <span className="hidden group-hover:inline-block text-xs text-black">Inventory</span>
           </li>
           <li className="relative group">
             <Link to="/queue-management">
               <FaListAlt />
             </Link>
-            <span className="absolute left-0 top-0 hidden group-hover:inline-block text-xs text-black m-2 p-3 text-center">Queue Management</span>
+            <span className="hidden group-hover:inline-block text-xs text-black">Queue Management</span>
           </li>
           <li className="relative group">
             <Link to="/vaccination">
               <FaSyringe />
             </Link>
-            <span className="absolute left-0 top-0 hidden group-hover:inline-block text-xs text-black m-2 p-3 text-center">Vaccination</span>
+            <span className="hidden group-hover:inline-block text-xs text-black">Vaccination</span>
           </li>
           <li className="relative group">
             <Link to="/reports">
               <FaFileAlt />
             </Link>
-            <span className="absolute left-0 top-0 hidden group-hover:inline-block text-xs text-black m-2 p-2 text-center">Reports</span>
+            <span className="hidden group-hover:inline-block text-xs text-black">Reports</span>
           </li>
           <li className="relative group">
             <Link to="/admin">
               <FaCog />
             </Link>
-            <span className="absolute left-0 top-0 hidden group-hover:inline-block text-xs text-black m-2 p-3 text-center">Admin</span>
+            <span className="hidden group-hover:inline-block text-xs text-black">Admin</span>
           </li>
         </ul>
       )}
