@@ -85,7 +85,7 @@ export default function Sidebar({ isOpen }) {
 
       {/* When Sidebar is closed, only show icons with tooltips on hover */}
       {!isOpen && (
-        <ul className="text-green-400 p-6 space-y-4 mt-14">
+        <ul className="text-green-400 p-6 space-y-5 mt-16">
           <li className="relative group">
             <Link to="/patient-registration">
               <FaUser />
