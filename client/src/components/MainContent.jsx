@@ -8,8 +8,7 @@ export default function MainContent({ isSidebarOpen }) {
         isSidebarOpen ? 'ml-[30%]' : 'ml-0'
       }`}
     >
-      <div className="text-center">
-        <h1 className="text-red-300 font-bold underline">Main Content</h1>
+      <div className="text-center mt-22">
         <ClinicianNotes />
       </div>
     </div>

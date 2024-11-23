@@ -5,13 +5,12 @@ import { Link } from 'react-router-dom'; // Import Link for routing
 export default function Sidebar({ isOpen }) {
   return (
     <div
-      className={`bg-blue-500 fixed top-0 left-0 h-full transition-all duration-300 ${isOpen ? 'w-[20%]' : 'w-0'}`}
+      className={`bg-blue-500 fixed top-0 left-0 h-full transition-all duration-300  ${isOpen ? 'w-[30%]' : 'w-0'}`}
     >
       {/* Only show the sidebar content if the sidebar is open */}
       {isOpen && (
         <>
-          <h1 className="text-red-300 font-bold underline p-4">Healthcare System</h1>
-          <ul className="text-white p-4 space-y-4">
+          <ul className="text-white p-4 space-y-4 mt-28 ">
             {/* Menu Items with Links and Icons */}
             <li className="flex items-center space-x-4">
               <Link to="/patient-registration" className="flex items-center space-x-2">
@@ -85,7 +84,7 @@ export default function Sidebar({ isOpen }) {
 
       {/* When Sidebar is closed, only show icons with tooltips on hover */}
       {!isOpen && (
-        <ul className="text-green-400 p-6 space-y-5 mt-16">
+        <ul className="text-green-400 p-6 space-y-5 mt-24">
           <li className="relative group">
             <Link to="/patient-registration">
               <FaUser />
