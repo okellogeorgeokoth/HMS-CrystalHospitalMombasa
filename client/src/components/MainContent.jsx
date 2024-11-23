@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'; // Import PropTypes for validation
-import ClinicianNotes from '../pages/ClinicianNotes';
+import PatientRegistration from '../pages/PatientRegistration';
 
 export default function MainContent({ isSidebarOpen }) {
   return (
@@ -9,7 +9,7 @@ export default function MainContent({ isSidebarOpen }) {
       }`}
     >
       <div className="text-center mt-22">
-        <ClinicianNotes />
+        <PatientRegistration/>
       </div>
     </div>
   );
