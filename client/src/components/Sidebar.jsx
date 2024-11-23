@@ -10,7 +10,7 @@ export default function Sidebar({ isOpen }) {
       {/* Only show the sidebar content if the sidebar is open */}
       {isOpen && (
         <>
-          <ul className="text-white p-4 space-y-4 mt-28 ">
+          <ul className="text-white p-4 space-y-4 mt-24">
             {/* Menu Items with Links and Icons */}
             <li className="flex items-center space-x-4">
               <Link to="/patient-registration" className="flex items-center space-x-2">
