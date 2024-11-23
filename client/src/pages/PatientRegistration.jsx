@@ -96,50 +96,7 @@ export default function PatientRegistration() {
       <h1 className="text-3xl font-bold text-blue-600">Patient Registration</h1>
 
       {/* Patient List */}
-      <div className="mt-8">
-        <input
-          type="text"
-          placeholder="Search patients..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full p-2 border border-gray-300 rounded"
-        />
-        <ul className="mt-4 space-y-2">
-          {paginatedPatients.map((patient, index) => (
-            <li key={index} className="flex justify-between items-center p-3 border border-gray-300 rounded">
-              <div>
-                <div>{patient.firstName} {patient.lastName}</div>
-                <div className="text-sm text-gray-600">{patient.phoneNumber}</div>
-              </div>
-              <button
-                onClick={() => handleEdit(index)}
-                className="bg-yellow-500 text-white py-1 px-2 rounded"
-              >
-                Edit
-              </button>
-            </li>
-          ))}
-        </ul>
-
-        {/* Pagination Controls */}
-        <div className="mt-4 flex justify-between">
-          <button
-            disabled={currentPage === 1}
-            onClick={() => handlePageChange(currentPage - 1)}
-            className="bg-gray-300 text-gray-700 py-1 px-4 rounded"
-          >
-            Previous
-          </button>
-          <span className="flex items-center">{`Page ${currentPage} of ${totalPages}`}</span>
-          <button
-            disabled={currentPage === totalPages}
-            onClick={() => handlePageChange(currentPage + 1)}
-            className="bg-gray-300 text-gray-700 py-1 px-4 rounded"
-          >
-            Next
-          </button>
-        </div>
-      </div>
+     
 
       {/* Registration Form */}
       <form onSubmit={handleSubmit} className="space-y-6 bg-white p-6 rounded-lg shadow mt-4">
@@ -349,6 +306,50 @@ export default function PatientRegistration() {
           </button>
         </div>
       </form>
+      <div className="mt-8">
+        <input
+          type="text"
+          placeholder="Search patients..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="w-full p-2 border border-gray-300 rounded"
+        />
+        <ul className="mt-4 space-y-2">
+          {paginatedPatients.map((patient, index) => (
+            <li key={index} className="flex justify-between items-center p-3 border border-gray-300 rounded">
+              <div>
+                <div>{patient.firstName} {patient.lastName}</div>
+                <div className="text-sm text-gray-600">{patient.phoneNumber}</div>
+              </div>
+              <button
+                onClick={() => handleEdit(index)}
+                className="bg-yellow-500 text-white py-1 px-2 rounded"
+              >
+                Edit
+              </button>
+            </li>
+          ))}
+        </ul>
+
+        {/* Pagination Controls */}
+        <div className="mt-4 flex justify-between">
+          <button
+            disabled={currentPage === 1}
+            onClick={() => handlePageChange(currentPage - 1)}
+            className="bg-gray-300 text-gray-700 py-1 px-4 rounded"
+          >
+            Previous
+          </button>
+          <span className="flex items-center">{`Page ${currentPage} of ${totalPages}`}</span>
+          <button
+            disabled={currentPage === totalPages}
+            onClick={() => handlePageChange(currentPage + 1)}
+            className="bg-gray-300 text-gray-700 py-1 px-4 rounded"
+          >
+            Next
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
