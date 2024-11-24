@@ -1,4 +1,4 @@
-**System Overview**
+System Overview
 This system is designed to manage healthcare workflows efficiently, streamlining operations from patient registration to billing, inventory management, and reporting.
 
 **Core Modules**
