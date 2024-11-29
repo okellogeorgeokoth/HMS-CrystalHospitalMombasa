@@ -36,8 +36,11 @@ export default function Layout() {
         <Header toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
 
         {/* Routes for Main Content */}
-        <div className={`bg-white p-4 md:p-8 lg:p-16 flex-1 transition-all duration-300 min-h-screen text-center ${
-    isSidebarOpen ? 'ml-[60%] sm:ml-[40%] md:ml-[-10%]' : 'ml-0' }`}>
+        <div
+      className={`bg-white p-16 flex-1 transition-all duration-300 min-h-screen text-center mt-22${
+        isSidebarOpen ? 'ml-[30%]' : 'ml-0'
+      }`}
+    >
           <Routes>
             <Route path="/patient-registration" element={<PatientRegistration />} />
             <Route path="/triage" element={<Triage />} />
